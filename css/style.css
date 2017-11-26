@@ -2,6 +2,7 @@ body {
 	background-image: url(../images/evaristo_the_cat_pattern_by_pluulp-d5g7bst.jpg);
 	height: 100vh;
 	background-color: #ffffff8f;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .loadingcat {
@@ -18,11 +19,11 @@ body {
     background-size: 225px;
 }
 #pleasewait {
-	position: absolute;
-    top: 50%;
+    position: absolute;
+    top: 75%;
     left: 50%;
-    margin-top: -10px;
-    margin-left: -35px;
+    margin-top: -17px;
+    margin-left: -124px;
 }
 
 .catwrapper {
@@ -44,9 +45,11 @@ body {
 }
 
 #categoryWrapper {
-	max-width:100vw;
-	overflow-x:auto;
-	white-space:nowrap;
+    max-width: 100vw;
+    overflow-x: auto;
+    white-space: nowrap;
+    overflow-y: hidden;
+    height: calc(100vh - 77px);
 }
 
 .task{
@@ -64,10 +67,41 @@ body {
     overflow: hidden;
 }
 
-.task-title label
-{
+.task-title label{
 	max-width: 85%;
     overflow: hidden;
+}
+
+#loginpagedescription{
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    padding-top: 10px;
+    font-size: 18px;
+    background-color: #337ab7;
+    color: white;
+	width: 100%;
+	padding-bottom: 7px;
+	margin: 0;
+}
+
+.categoryTitle label{
+    font-size: 24px;
+	background-color: #e0f3f2;
+    border-radius: 5px;
+    padding: 0px 5px;
+    margin: 5px;
+    padding-bottom: 4px;
+}
+
+
+
+#boardpagelogo{
+    font-size: 250%;
+}
+
+#boardpagetext{
+	font-size: 13px;
 }
 
 .task-description{

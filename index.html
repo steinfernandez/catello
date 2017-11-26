@@ -13,19 +13,19 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   </head>
 
   <body>
   <div class="loadingcat hide">
-  <p id="pleasewait">please wait</p>
+  <p id="pleasewait">Talking to database cats. Please wait...</p>
   </div>
     <div class="catwrapper">
       <div class="container-fluid" id="login-page">
         <div class="row">
           <div class="col-md-12">
             <div class="page-header">
-              <h1 class="text-center">
+              <h1 id="titletext" class="text-center">
 						Welcome to Catello!
 					</h1>
             </div>
@@ -46,11 +46,9 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-            <p>
+            <p id="loginpagedescription">
               Catello is a Trello clone made as an interview assignment for indee.tv. Designed and developed by Stein Astor Fernandez in under 48 hours.
             </p>
-          </div>
         </div>
         <div id="loginModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -135,12 +133,13 @@
 
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
               <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-            </button> <a class="navbar-brand" href="#">Catello</a>
+            </button> <span id="boardpagelogo" class="navbar-brand">Catello</span>
+			<span id="boardpagetext" class="navbar-brand">Developed by Stein Astor Fernandez.</span>
           </div>
 
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <button type="button" class="btn btn-info btn-sm" id="syncbutton">
+              <button type="button" class="btn btn-info btn-sm hide" id="syncbutton">
                 Sync
               </button>
               <li class="dropdown">
