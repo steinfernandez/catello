@@ -1,6 +1,23 @@
 // Empty JS for your own code to be here
 var isAjaxInProcess = false;
 var token;
+var timeoutvar;
+
+function SyncTimer()
+{
+	if(timeoutvar)
+		clearTimeout(timeoutvar);
+	timeoutvar = setTimeout(sync,10000);
+}
+ 
+
+function AjaxInProgress(arg)
+{
+	if(arg)
+		$('.loadingcat').removeClass('hide');
+	else
+		$('.loadingcat').addClass('hide');
+}
 
 function newTask (title,description)
 {
@@ -17,8 +34,9 @@ function newTask (title,description)
 function newCat (categoryName, taskList) 
 {
 	var nc = '<div class="categoryDiv">'+
-				'<div class="categoryTitle">'+
-						categoryName +
+				'<div class="categoryTitle"><label>'+ categoryName + '</label>' +
+						'<button type="button" class="btn btn-info btn-xs editCategoryButton pull-right glyphicon glyphicon-pencil" data-toggle="modal" data-target="#categoryeditModal">'+
+						'</button>'+
 				'</div>'+
 				'<div class="connectedSortable">';
 	for(var i of taskList)
@@ -89,11 +107,16 @@ function parseCats() {
 
 function enableDragDrop()
 {
-    $( ".connectedSortable" ).sortable({
-      connectWith: ".connectedSortable"
-    }).disableSelection();
+    $( ".connectedSortable" ).sortable(
+	{
+		stop: function( event, ui ) { SyncTimer(); },
+		connectWith: ".connectedSortable"
+    })
+	.disableSelection();
 	console.log("enabling drag and drop");
 }
+
+//task modal stuff
 
 var t;
 
@@ -108,26 +131,36 @@ $('#taskeditModal').on('show.bs.modal', function (event) {
 $('#taskeditModal').on('hide.bs.modal', function (event) {
 	t.find('.task-title label').html($(this).find('#editTitle').val())
 	t.find('.task-description').html($(this).find('#editDescription').val())
+	SyncTimer();
 });
 
-//sync
+//taskdelete
 
-// $('#syncbutton').on('click', function() {
-	// var settings = {
-		// "async": true,
-		// "crossDomain": true,
-		// "url": "http://localhost:3000/updateall",
-		// "method": "POST",
-		// "headers": {
-		// "content-type": "application/x-www-form-urlencoded",
-		// },
-		// "data": {}
-	// }
+$('#taskdeleteButton').on('click',function(e){
+	t.remove();
+	$('#taskeditModal').modal('hide');
+	SyncTimer();
+})
 
-	// $.ajax(settings).done(function (response) {
-		// console.log(response);
-	// });
-// })
+//category stuff
+var c;
+
+$('#categoryeditModal').on('show.bs.modal', function (event) {
+    c = $(event.relatedTarget).closest('.categoryDiv');
+	$(this).find('#editCategory').val(c.find('.categoryTitle').text());
+});
+
+$('#categoryeditModal').on('hide.bs.modal', function (event) {
+	c.find('.categoryTitle label').html($(this).find('#editCategory').val())
+	SyncTimer();
+
+});
+
+$('#categorydeleteButton').on('click',function(e){
+	c.remove();
+	$('#categoryeditModal').modal('hide');
+	SyncTimer();
+})
 
 //login request
 
@@ -144,10 +177,11 @@ $('#submitLogin').on('click', function(){
 		"headers": {
 		"content-type": "application/x-www-form-urlencoded"
 		},
-		"data": { "username":$('#loginUsername').val(),"password":$('#loginPassword').val()}
+		"data": { "username":$('#loginUsername').val(),"password": md5($('#loginPassword').val()) }
 	}
 	
 	isAjaxInProcess = true;
+	AjaxInProgress(isAjaxInProcess);
 
 	$.ajax(settings).done(function (response) {
 		console.log(response);
@@ -165,8 +199,10 @@ $('#submitLogin').on('click', function(){
 		}
 	}).fail(function(response){
 		console.log(response);
+		alert("Bad kitty! The server refused to authenticate you.");
 	}).always(function(){
 		isAjaxInProcess = false;
+		AjaxInProgress(isAjaxInProcess);
 	});
 })
 
@@ -185,10 +221,11 @@ $('#submitSignup').on('click', function(){
 		"headers": {
 		"content-type": "application/x-www-form-urlencoded"
 		},
-		"data": { "username":$('#signupUsername').val(),"password":$('#signupPassword').val()}
+		"data": { "username":$('#signupUsername').val(),"password": md5($('#signupPassword').val()) }
 	}
 	
 	isAjaxInProcess = true;
+	AjaxInProgress(isAjaxInProcess);
 
 	$.ajax(settings).done(function (response) {
 		console.log(response);
@@ -201,6 +238,7 @@ $('#submitSignup').on('click', function(){
 		console.log(response);
 	}).always(function(){
 		isAjaxInProcess = false;
+		AjaxInProgress(isAjaxInProcess);
 	});
 })
 
@@ -224,6 +262,7 @@ function retrieveAll()
 	}
 	
 	isAjaxInProcess = true;
+	AjaxInProgress(isAjaxInProcess);
 
 	$.ajax(settings).done(function (response) {
 		console.log(response);
@@ -239,6 +278,7 @@ function retrieveAll()
 		console.log(response);
 	}).always(function(){
 		isAjaxInProcess = false;
+		AjaxInProgress(isAjaxInProcess);
 	});
 }
 
@@ -276,6 +316,7 @@ function sync()
 	}
 	
 	isAjaxInProcess = true;
+	AjaxInProgress(isAjaxInProcess);
 
 	$.ajax(settings).done(function (response) {
 		console.log(response);
@@ -287,6 +328,7 @@ function sync()
 		console.log(response);
 	}).always(function(){
 		isAjaxInProcess = false;
+		AjaxInProgress(isAjaxInProcess);
 	});
 }
 

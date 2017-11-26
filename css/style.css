@@ -4,6 +4,27 @@ body {
 	background-color: #ffffff8f;
 }
 
+.loadingcat {
+	position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    background-color: rgba(231, 223, 221, 0.66);
+    background-image: url(../images/lg.blue-longcat-spinner.gif);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 225px;
+}
+#pleasewait {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -35px;
+}
+
 .catwrapper {
 	height: 100vh;
 	background-color: #ffffff8f;
@@ -40,6 +61,12 @@ body {
     width: 100%;
     background-color: #88acc54a;
     padding: 3px;
+    overflow: hidden;
+}
+
+.task-title label
+{
+	max-width: 85%;
     overflow: hidden;
 }
 
